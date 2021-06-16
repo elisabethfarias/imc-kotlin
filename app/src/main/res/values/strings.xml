@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">imc-app</string>
+    <string name="input_weight">peso</string>
+</resources>
