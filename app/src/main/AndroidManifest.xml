@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Imcapp">
 
-        <activity android:name=".ui.ResultActivity"></activity>
 
         <activity android:name=".ui.MainActivity">
             <intent-filter>

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">imc-app</string>
     <string name="input_weight">peso</string>
+    <string name="tv_toolbar_title">Cálculadora de IMC</string>
+    <string name="tv_title">Cálculo de IMC</string>
+    <string name="txt_input_hint_weight">Peso</string>
 </resources>

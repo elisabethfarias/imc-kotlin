@@ -7,9 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.imc_app.R
 import com.example.imc_app.databinding.ActivityMainBinding
-import java.math.BigDecimal
 
-import java.math.RoundingMode
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
@@ -20,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setListeners()
-
     }
 
     private fun setListeners() {
@@ -30,28 +27,30 @@ class MainActivity : AppCompatActivity() {
         val calculate = binding.btnCalculate
 
         inputWeight?.doAfterTextChanged { value ->
-            if(value.toString().isNullOrEmpty()) {
+            if(value.toString().isEmpty()) {
                 binding.tvTitle.text = "Cálculo de IMC"
             }
         }
 
         inputHeight?.doAfterTextChanged { value ->
-            if(value.toString().isNullOrEmpty()) {
+            if(value.toString().isEmpty()) {
                 binding.tvTitle.text = "Cálculo de IMC"
             }
         }
 
-        calculate?.setOnClickListener {
+        calculate.setOnClickListener {
             if (inputWeight?.text.toString().isNullOrEmpty() && inputHeight?.text.toString().isNullOrEmpty() ) {
                 inputWeight?.error = "Preencha o campo"
                 inputHeight?.error = "Preencha o campo"
                 binding.tvTitle.text = "Cálculo de IMC"
             }
 
-            var imc = mainViewModel.calculateIMC(inputWeight?.text.toString(), inputHeight?.text.toString())
+            val imcValue = mainViewModel.calculateIMC(inputWeight?.text.toString(), inputHeight?.text.toString())
+            val imcResultMessage = mainViewModel.checkIMC(imcValue)
 
-            if (imc != BigDecimal.ZERO) {
-                binding.tvTitle.text = "Seu é $imc"
+            if (imcValue > 0 && imcValue != 0.0) {
+                println("ImcValue: $imcValue")
+                binding.tvTitle.text = imcResultMessage
             }
         }
     }
