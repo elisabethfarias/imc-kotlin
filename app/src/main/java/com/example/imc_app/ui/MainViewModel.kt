@@ -1,12 +1,8 @@
 package com.example.imc_app.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import java.lang.Math.round
-import kotlin.math.pow
 import java.math.BigDecimal
 import java.math.RoundingMode
-import kotlin.math.roundToInt
 
 
 class MainViewModel : ViewModel() {
