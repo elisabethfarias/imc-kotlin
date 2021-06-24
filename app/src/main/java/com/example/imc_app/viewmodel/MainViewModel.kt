@@ -1,11 +1,15 @@
-package com.example.imc_app.ui
+package com.example.imc_app.viewmodel
 
+import android.app.Presentation
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 
 class MainViewModel : ViewModel() {
+   val presentation = MutableLiveData<Presentation>()
+
     fun calculateIMC(weight: String, height: String) : Double {
         var weight = weight.toFloatOrNull()
         var height = height.toFloatOrNull()
@@ -40,4 +44,24 @@ class MainViewModel : ViewModel() {
         }
        return msg
    }
+
+    fun validate(text: String) {
+        if (text.isEmpty()) {
+            presentation.value = getPresentation().copy(
+                title = "Cálculo de IMC"
+            )
+        }
+    }
+
+    fun getPresentation() = presentation.value ?: Presentation()
+
+    fun initPresentation() {
+        presentation.value = getPresentation().copy(
+            title = "Cálculo de IMC"
+        )
+    }
+
+    data class Presentation(
+        var title: String = ""
+    )
 }

@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.imc_app.R
 import com.example.imc_app.databinding.ActivityMainBinding
+import com.example.imc_app.viewmodel.MainViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +20,15 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        observe()
         setListeners()
+    }
+
+    private fun observe() {
+        mainViewModel.presentation.observe(this, {
+            binding.presentation = it
+        })
+        mainViewModel.initPresentation()
     }
 
     private fun setListeners() {
@@ -29,15 +38,11 @@ class MainActivity : AppCompatActivity() {
         val calculate = binding.btnCalculate
 
         inputWeight?.doAfterTextChanged { value ->
-            if(value.toString().isEmpty()) {
-                binding.tvTitle.text = "Cálculo de IMC"
-            }
+            mainViewModel.validate(value.toString())
         }
 
         inputHeight?.doAfterTextChanged { value ->
-            if(value.toString().isEmpty()) {
-                binding.tvTitle.text = "Cálculo de IMC"
-            }
+           mainViewModel.validate(value.toString())
         }
 
         calculate.setOnClickListener {
