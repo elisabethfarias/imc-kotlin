@@ -2,24 +2,40 @@ package com.example.imc_app.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.imc_app.R
 import com.example.imc_app.databinding.ActivityMainBinding
+import com.example.imc_app.viewmodel.MainViewModel
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding //lembra de anota esse trecho
+    private lateinit var binding : ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        setSupportActionBar(binding.toolbar)
+        //setSupportActionBar(binding.toolbar)
+
+//        setSupportActionBar(findViewById(R.id.toolbar))
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        observe()
         setListeners()
+    }
+
+
+    private fun observe() {
+        mainViewModel.presentation.observe(this, {
+            binding.presentation = it
+        })
+        mainViewModel.initPresentation()
     }
 
     private fun setListeners() {
@@ -29,15 +45,11 @@ class MainActivity : AppCompatActivity() {
         val calculate = binding.btnCalculate
 
         inputWeight?.doAfterTextChanged { value ->
-            if(value.toString().isEmpty()) {
-                binding.tvTitle.text = "Cálculo de IMC"
-            }
+            mainViewModel.validate(value.toString())
         }
 
         inputHeight?.doAfterTextChanged { value ->
-            if(value.toString().isEmpty()) {
-                binding.tvTitle.text = "Cálculo de IMC"
-            }
+           mainViewModel.validate(value.toString())
         }
 
         calculate.setOnClickListener {
