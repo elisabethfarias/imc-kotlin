@@ -15,6 +15,7 @@ class CalculoImcTest : TestCase() {
 
     }
 
+
     @Test
     fun `test message` () {
         val resultImc = mainViewModel.calculateIMC("68.0",  "1.57")
@@ -24,19 +25,3 @@ class CalculoImcTest : TestCase() {
 
 }
 
-//fun calculateIMC(weight: String, height: String) : Double {
-//    var weight = weight.toFloatOrNull()
-//    var height = height.toFloatOrNull()
-//    var imc = 0.00
-//    println("Weight: $weight")
-//    println("Height: $height")
-//
-//    if (weight != null && height != null) {
-//        imc = (weight / (height * height)).toDouble()
-//        imc = BigDecimal(imc).setScale(2, RoundingMode.HALF_EVEN).toDouble()
-//    }
-//
-//    println("Imc: $imc")
-//
-//    return imc
-//}
